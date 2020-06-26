@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:marquee/marquee.dart';
@@ -50,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var shownWidget;
 
     if (step == 0) {
-      /*--------- STEP ZERO ---------*/
+      /*--------- STEP FIRST ---------*/
       shownWidget = <Widget>[
         Container(
           padding: EdgeInsets.only(right: 25, left: 25),
@@ -91,18 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       ];
     } else if (step == 1) {
-      /*--------- STEP ONE ---------*/
-      int second = 0;
-      var timer = Timer.periodic(new Duration(seconds: 1), (timer) async {
-          second++;
-          if (second > 10 && score < 3) {
-            timer.cancel();
-            setState(() {
-              step++;
-            });
-          }
-      });
-
+      /*--------- STEP SECOND ---------*/
       shownWidget = <Widget>[
         Container(
           alignment: Alignment.center,
@@ -133,10 +123,58 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
+        Container(
+            margin: EdgeInsets.only(top: 20),
+            alignment: Alignment.center,
+            child: RaisedButton(
+              onPressed: () {
+                setState(() {
+                  step++;
+                });
+              },
+              color: Colors.cyan,
+              child: Text(
+                "BREAK",style: TextStyle(color: Colors.white, fontSize: 25),
+              ),
+            )
+        )
+
       ];
     } else {
+      /*--------- STEP THIRD ---------*/
       shownWidget = <Widget>[
-        Text("score : ${score}")
+        Container(
+          margin: EdgeInsets.only(bottom: 30),
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.done_outline,
+            size: 50,
+            color: Colors.cyan,
+          ),
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: Text(
+            "Hey ${userName.text.trim()}, your score : ${score}",
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 30),
+          alignment: Alignment.center,
+          child: RaisedButton(
+            onPressed: () {
+              setState(() {
+                step=1;
+                score=0;
+              });
+            },
+            color: Colors.cyan,
+            child: Text(
+              "TRY AGAIN",style: TextStyle(color: Colors.white, fontSize: 25),
+            ),
+          )
+        )
       ];
     }
 
